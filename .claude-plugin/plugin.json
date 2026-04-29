@@ -1,0 +1,27 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "accessibility-reviewer",
+  "version": "1.0.0",
+  "description": "Review frontend and mobile UI components for accessibility risks and refactoring opportunities.",
+  "author": {
+    "name": "Antal Arnold Gati"
+  },
+  "homepage": "https://github.com/anti20/accessibility-reviewer",
+  "repository": "https://github.com/anti20/accessibility-reviewer",
+  "license": "MIT",
+  "keywords": [
+    "accessibility",
+    "wcag",
+    "codex",
+    "claude-code",
+    "cursor",
+    "react",
+    "react-native",
+    "swiftui",
+    "uikit",
+    "flutter"
+  ],
+  "skills": [
+    "./accessibility-reviewer"
+  ]
+}

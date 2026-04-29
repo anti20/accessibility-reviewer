@@ -1,0 +1,4 @@
+interface:
+  display_name: "Accessibility Reviewer"
+  short_description: "Review UI components for accessibility risks"
+  default_prompt: "Use $accessibility-reviewer to review this UI component for accessibility and suggest refactored code."
