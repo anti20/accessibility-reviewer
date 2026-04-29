@@ -64,7 +64,7 @@ See [examples/prompts.md](examples/prompts.md) for ready-to-use prompts for Reac
 
 ## Sample Output
 
-See [examples/sample-output.md](examples/sample-output.md) for a representative review format with severity, confidence, evidence, impact, fixes, WCAG mapping, and a concise refactor.
+See [examples/sample-output.md](examples/sample-output.md) for a representative review format with a score, risk level, prioritized numbered issues, concise fixes, WCAG/platform notes, and before/after code only where useful.
 
 ## What the Skill Checks
 
@@ -73,6 +73,7 @@ See [examples/sample-output.md](examples/sample-output.md) for a representative 
 - Framework-specific pitfalls: custom clickable views, icon-only buttons, gesture-only actions, hidden focusable content, suppressed font scaling, clipped text, and fixed-size layouts.
 - UX clarity: ambiguous copy, visual-only state, inaccessible empty/error/loading states, and unclear destructive actions.
 - Refactoring opportunities: native semantic controls, stable labels, state-specific accessibility props, and small targeted changes instead of broad rewrites.
+- Long-review progress updates: short status phrases such as "Reading project files", "Checking accessibility", and "Writing report" before the final report.
 
 ## Repository Layout
 

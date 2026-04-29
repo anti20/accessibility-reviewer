@@ -7,7 +7,7 @@ description: Review frontend and mobile UI components for accessibility risks an
 
 ## Overview
 
-Use this skill to review UI component code with an accessibility-first lens, especially for blind and visually impaired users. Prioritize actionable, evidence-based findings; map each meaningful risk to a WCAG category; include severity and confidence; and only provide refactored code when it materially helps the user fix or understand the issue.
+Use this skill to review UI component code with an accessibility-first lens, especially for blind and visually impaired users. Prioritize actionable, evidence-based findings; map each meaningful risk to a WCAG category or platform rule; include severity; and only provide before/after code when it materially helps the user fix or understand the issue.
 
 ## Workflow
 
@@ -19,6 +19,20 @@ Use this skill to review UI component code with an accessibility-first lens, esp
 6. Apply the "refactor only when useful" rule: include refactored code only when there is a concrete fix, a risky pattern should be replaced, or code will clarify the recommendation. If no useful code change is needed, write "No refactored code needed" in that section.
 7. When refactoring, keep the original architecture and style unless accessibility requires a structural change.
 8. If runtime validation is possible and appropriate, suggest or run relevant checks: browser accessibility tree inspection, screen reader smoke test, keyboard-only traversal, text scaling, color contrast calculation, snapshot at large font sizes, or native accessibility inspector.
+
+## Progress Updates
+
+During longer project or folder reviews, send short progress updates before the final report. Use only one of these 1-4 word updates:
+
+- Reading project files
+- Finding UI components
+- Checking accessibility
+- Reviewing screen readers
+- Checking visual risks
+- Preparing fixes
+- Writing report
+
+When the final report is ready, stop sending progress updates. The final answer should contain only the completed report.
 
 ## Review Priorities
 
@@ -37,26 +51,64 @@ Check these areas before commenting on lower-value style issues:
 
 ## Output Format
 
-Always structure the answer with these sections, omitting only sections that are truly not applicable:
-
-1. **Verdict**: State whether the component passes, needs changes, or has serious accessibility blockers. Include the top severity present and the main reason in one or two sentences.
-2. **Accessibility issues**: List concrete issues, ordered by severity. For each issue include `Severity`, `Confidence`, `Evidence`, `Impact`, and `Fix`.
-3. **WCAG-related risks**: Map issues to likely WCAG categories or success criteria. Say "likely" when exact conformance cannot be proven from static code.
-4. **Screen reader issues**: Describe how VoiceOver, TalkBack, NVDA, JAWS, or browser screen readers may experience the UI.
-5. **UX/UI improvements**: Recommend interaction, content, layout, and state improvements for clarity and inclusiveness.
-6. **Performance/code issues**: Call out maintainability and runtime concerns that affect accessibility or UI quality.
-7. **Refactored code**: Provide a focused replacement or patch-style snippet only when useful. Keep it concise and idiomatic for the detected framework; otherwise state that no refactored code is needed.
-8. **Short explanation of changes**: Summarize what changed and why.
-
-Use this compact issue format when possible:
+Start with this short verdict block:
 
 ```text
-- [High | Confidence: High] Missing accessible name on icon-only button
-  WCAG: Perceivable / 1.1.1 Non-text Content; Operable / 4.1.2 Name, Role, Value
-  Evidence: <button><SearchIcon /></button>
-  Impact: Screen reader users may hear only "button" with no purpose.
-  Fix: Add a visible label or an accessible name; hide the decorative icon.
+# Accessibility Review
+
+## Verdict
+
+Accessibility score: X/100
+Risk level: Low / Medium / High / Critical
+Main problem: short one-line summary
+Recommended action: short one-line summary
 ```
+
+Then list issues in priority order under `## Issues to fix`. Each issue must be numbered and short. Prefer concrete file and line references. Group duplicate issues when they have the same fix. Do not over-report minor issues.
+
+Use this issue format:
+
+```text
+### 1. [Severity] Issue title
+
+File: path/to/file.swift
+Line: 42
+Problem: short explanation
+Why it matters: short explanation
+Recommended fix: short instruction
+WCAG/platform notes: brief category, success criterion, or platform rule when useful
+```
+
+Include `Before` and `After` code blocks only when useful:
+
+````text
+Before:
+
+```swift
+// original code
+```
+
+After:
+
+```swift
+// improved code
+```
+````
+
+When no useful code change is warranted, do not add a refactored code section. Briefly say there are no code changes needed if that matters for clarity.
+
+At the end of every completed review, ask exactly:
+
+```text
+Would you like me to apply the fixes now?
+
+Options:
+- Apply all recommended fixes
+- Apply only selected issue numbers
+- Do not apply fixes; leave this as a manual review
+```
+
+If the user chooses selected issue numbers, ask which issue numbers to apply.
 
 ## Refactoring Rules
 
@@ -80,15 +132,17 @@ Use this compact issue format when possible:
 - **Medium**: Creates meaningful friction or ambiguity, such as weak hints, inconsistent headings, small targets, missing status announcements, or unclear validation.
 - **Low**: Improves polish, resilience, or maintainability without blocking access, such as clearer labels, cleaner grouping, or reducing redundant announcements.
 
-## Confidence Guide
+## Uncertainty Guide
 
-- **High**: The issue is directly visible in the code or follows from a deterministic platform rule.
-- **Medium**: The issue is likely from the code but depends on surrounding styles, runtime state, theme tokens, localization, or component composition.
-- **Low**: The issue is a plausible risk that needs visual, device, assistive technology, or runtime verification. Keep low-confidence findings brief and do not let them dominate the review.
+- Direct evidence: The issue is visible in code or follows from a deterministic platform rule. Report it normally.
+- Runtime-dependent evidence: The issue depends on styles, runtime state, theme tokens, localization, or composition. Label it as needing runtime verification.
+- Plausible risk only: Keep it brief, avoid letting it dominate the review, and do not count it as a major score penalty unless the user asked for risk discovery.
 
 ## WCAG Category Mapping
 
-Use WCAG categories to keep findings grounded:
+WCAG started as web guidance, but many principles also apply to mobile and native apps. Use WCAG as a shared accessibility baseline, not as the only source of truth for SwiftUI, UIKit, React Native, or Flutter.
+
+Use these WCAG categories to keep findings grounded:
 
 - **Perceivable**: text alternatives, captions, semantic structure, color contrast, color-only indicators, text resize/reflow.
 - **Operable**: keyboard access, focus order, focus visibility, target size, pointer gestures, motion/animation controls, bypass blocks.
@@ -96,6 +150,13 @@ Use WCAG categories to keep findings grounded:
 - **Robust**: name/role/value, valid semantics, status messages, compatibility with assistive technologies.
 
 When useful, include success criteria numbers such as 1.1.1, 1.3.1, 1.4.3, 1.4.10, 1.4.11, 2.1.1, 2.4.3, 2.4.7, 2.5.5, 3.3.1, 3.3.2, 4.1.2, and 4.1.3. Do not force a criterion number if the mapping is uncertain; use the category instead.
+
+For native mobile, also consider platform-specific rules and APIs:
+
+- iOS VoiceOver, Dynamic Type, `accessibilityLabel`, `accessibilityHint`, and `accessibilityTraits`.
+- Android TalkBack, target sizing, focus behavior, and platform semantic roles.
+- Flutter `Semantics`, `Tooltip`, `ExcludeSemantics`, `MergeSemantics`, and focus traversal.
+- React Native `accessibilityRole`, `accessibilityLabel`, `accessibilityHint`, `accessibilityState`, hit slop, and font scaling.
 
 ## Do Not Over-Report
 
@@ -111,10 +172,13 @@ When useful, include success criteria numbers such as 1.1.1, 1.3.1, 1.4.3, 1.4.1
 Before finalizing a review, verify:
 
 - The verdict reflects the highest true severity.
-- Every issue has severity and confidence.
+- The score, risk level, main problem, and recommended action are consistent with the findings.
+- Every issue is numbered, concise, and ordered by priority.
 - Every meaningful issue maps to a WCAG category or likely success criterion.
+- Native mobile issues include platform-specific notes when WCAG alone is incomplete.
 - Screen reader impact is explained from the user's perspective.
 - Keyboard/focus, touch target, text scaling, and contrast risks were considered.
-- Refactored code is included only when it helps.
+- Before/after code is included only when it helps.
 - The response avoids generic advice and duplicate findings.
 - Any uncertainty is labeled as a runtime verification need.
+- The final review ends with the required "Would you like me to apply the fixes now?" options.
