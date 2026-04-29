@@ -7,7 +7,7 @@ description: Review frontend and mobile UI components for accessibility risks an
 
 ## Overview
 
-Use this skill to review UI component code with an accessibility-first lens, especially for blind and visually impaired users. Prioritize actionable, evidence-based findings; map each meaningful risk to a WCAG category or platform rule; include severity; and only provide before/after code when it materially helps the user fix or understand the issue.
+Use this skill to review UI component code with an accessibility-first lens, especially for blind and visually impaired users. Prioritize actionable, evidence-based findings; map each meaningful risk to a WCAG category or platform rule; include severity; and provide fixed-code suggestions whenever a concrete fix is possible.
 
 ## Workflow
 
@@ -58,8 +58,8 @@ Start with this short verdict block:
 
 ## Verdict
 
-Accessibility score: X/100
-Risk level: Low / Medium / High / Critical
+Review score: X/100
+Overall risk: Low / Medium / High / Critical
 Main problem: short one-line summary
 Recommended action: short one-line summary
 ```
@@ -79,23 +79,23 @@ Recommended fix: short instruction
 WCAG/platform notes: brief category, success criterion, or platform rule when useful
 ```
 
-Include `Before` and `After` code blocks only when useful:
+Include `Original code` and `Fixed code` blocks whenever a concrete code fix is possible:
 
 ````text
-Before:
+Original code:
 
 ```swift
 // original code
 ```
 
-After:
+Fixed code:
 
 ```swift
 // improved code
 ```
 ````
 
-When no useful code change is warranted, do not add a refactored code section. Briefly say there are no code changes needed if that matters for clarity.
+When no useful code change is warranted or the fix depends on unavailable surrounding code, briefly say that fixed code is not provided and explain why.
 
 At the end of every completed review, ask exactly:
 
@@ -113,6 +113,8 @@ If the user chooses selected issue numbers, ask which issue numbers to apply.
 ## Refactoring Rules
 
 - Preserve visible behavior unless the visible behavior is the accessibility problem.
+- Always provide a fixed-code suggestion when the issue has a concrete local code fix.
+- Keep fixed-code snippets focused on the smallest useful replacement, not a full-file rewrite unless the surrounding structure is necessary.
 - Prefer native semantic elements/components before ARIA or platform accessibility overrides.
 - Do not add ARIA, accessibility props, labels, or hints that disagree with visible behavior.
 - Avoid making decorative icons/images accessible; hide them from assistive technologies.
@@ -172,13 +174,13 @@ For native mobile, also consider platform-specific rules and APIs:
 Before finalizing a review, verify:
 
 - The verdict reflects the highest true severity.
-- The score, risk level, main problem, and recommended action are consistent with the findings.
+- The review score, overall risk, main problem, and recommended action are consistent with the findings.
 - Every issue is numbered, concise, and ordered by priority.
 - Every meaningful issue maps to a WCAG category or likely success criterion.
 - Native mobile issues include platform-specific notes when WCAG alone is incomplete.
 - Screen reader impact is explained from the user's perspective.
 - Keyboard/focus, touch target, text scaling, and contrast risks were considered.
-- Before/after code is included only when it helps.
+- Fixed code is provided whenever a concrete code fix is possible.
 - The response avoids generic advice and duplicate findings.
 - Any uncertainty is labeled as a runtime verification need.
 - The final review ends with the required "Would you like me to apply the fixes now?" options.

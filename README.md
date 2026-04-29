@@ -64,7 +64,7 @@ See [examples/prompts.md](examples/prompts.md) for ready-to-use prompts for Reac
 
 ## Sample Output
 
-See [examples/sample-output.md](examples/sample-output.md) for a representative review format with a score, risk level, prioritized numbered issues, concise fixes, WCAG/platform notes, and before/after code only where useful.
+See [examples/sample-output.md](examples/sample-output.md) for a representative review format with a review score, overall risk, prioritized numbered issues, concise fixes, WCAG/platform notes, and original/fixed code suggestions where possible.
 
 ## What the Skill Checks
 

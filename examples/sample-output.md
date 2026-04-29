@@ -4,8 +4,8 @@
 
 ## Verdict
 
-Accessibility score: 68/100
-Risk level: High
+Review score: 68/100
+Overall risk: High
 Main problem: Primary actions are not reliably exposed to screen reader and keyboard users.
 Recommended action: Replace custom interactive markup with native controls and add missing accessible names.
 
@@ -20,7 +20,7 @@ Why it matters: Screen reader users may not know which control dismisses the dia
 Recommended fix: Add a stable accessible name to the button and hide the decorative icon.
 WCAG/platform notes: Perceivable / 1.1.1 Non-text Content; Robust / 4.1.2 Name, Role, Value.
 
-Before:
+Original code:
 
 ```tsx
 <button onClick={onClose}>
@@ -28,7 +28,7 @@ Before:
 </button>
 ```
 
-After:
+Fixed code:
 
 ```tsx
 <button type="button" aria-label="Close dialog" onClick={onClose}>
@@ -45,7 +45,7 @@ Why it matters: Keyboard and screen reader users may not be able to focus or act
 Recommended fix: Use a native submit button.
 WCAG/platform notes: Operable / 2.1.1 Keyboard; Robust / 4.1.2 Name, Role, Value.
 
-Before:
+Original code:
 
 ```tsx
 <div className="submit" onClick={submit}>
@@ -53,7 +53,7 @@ Before:
 </div>
 ```
 
-After:
+Fixed code:
 
 ```tsx
 <button type="submit">
@@ -69,6 +69,27 @@ Problem: The visible text changes to "Saving..." but the status is not exposed a
 Why it matters: Screen reader users may not know that submission started or completed.
 Recommended fix: Add a polite status region for important async state changes.
 WCAG/platform notes: Robust / 4.1.3 Status Messages.
+
+Original code:
+
+```tsx
+<button type="submit" disabled={saving}>
+  {saving ? "Saving..." : "Submit"}
+</button>
+```
+
+Fixed code:
+
+```tsx
+<>
+  <button type="submit" disabled={saving}>
+    {saving ? "Saving..." : "Submit"}
+  </button>
+  <p role="status" aria-live="polite" className="sr-only">
+    {saving ? "Saving changes" : ""}
+  </p>
+</>
+```
 
 Would you like me to apply the fixes now?
 
