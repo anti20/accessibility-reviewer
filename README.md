@@ -42,7 +42,7 @@ In Codex, trigger the skill directly:
 
 You can also use natural language:
 
-> Use the accessibility-reviewer skill to review the changed UI files in this project. Prioritize blockers for blind users, keyboard/focus issues, missing labels, text scaling problems, and provide refactored code where appropriate.
+> Use the accessibility-reviewer skill to review the changed UI files in this project. Prioritize blockers for blind users, keyboard/focus issues, missing labels, text scaling problems, and provide fixed code where possible.
 
 For focused reviews:
 
@@ -54,7 +54,7 @@ If your agent supports Agent Skills, install the skill folder and invoke it usin
 
 > /accessibility-reviewer review this component for VoiceOver and Dynamic Type issues.
 
-> Use the Accessibility Reviewer skill on the currently open file. Return issues and refactored code only where it improves accessibility.
+> Use the Accessibility Reviewer skill on the currently open file. Return issues and fixed code only where it improves accessibility.
 
 Claude Code plugin-compatible tools can read `.claude-plugin/plugin.json`, which points to the `accessibility-reviewer` skill folder in this repository. If your tool expects skills under a project or user-level skills directory, copy the `accessibility-reviewer/` folder there.
 
@@ -65,6 +65,19 @@ See [examples/prompts.md](examples/prompts.md) for ready-to-use prompts for Reac
 ## Sample Output
 
 See [examples/sample-output.md](examples/sample-output.md) for a representative review format with a review score, overall risk, prioritized numbered issues, concise fixes, WCAG/platform notes, and original/fixed code suggestions where possible.
+
+## Report Format
+
+Final reports start with `# Accessibility Review`, followed by a short verdict block:
+
+- `Review score`
+- `Overall risk`
+- `Main problem`
+- `Recommended action`
+
+Issues appear under `## Issues to fix` in numbered priority order. Each issue uses a short file, line, problem, why it matters, and recommended fix format. When a concrete fix is possible, the report includes `Original code:` and `Fixed code:` snippets.
+
+Every completed review ends by asking whether to apply all fixes, apply only selected issue numbers, or leave the review as manual guidance. Progress updates are only for longer reviews while work is underway; they should not appear in the final report.
 
 ## What the Skill Checks
 

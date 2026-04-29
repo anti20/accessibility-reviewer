@@ -16,7 +16,7 @@ Use this skill to review UI component code with an accessibility-first lens, esp
 3. Load [references/framework-checklists.md](references/framework-checklists.md) for framework-specific API names and pitfalls when reviewing React, React Native, SwiftUI, UIKit Swift/plain Swift UI code, or Flutter.
 4. Prefer severity-ranked, code-grounded issues over broad advice. Distinguish confirmed bugs from plausible risks that require runtime visual verification.
 5. Apply the "do not over-report" rule: do not list speculative, generic, or duplicate findings. If the code already uses the platform's native accessible pattern correctly, say so briefly or omit it.
-6. Apply the "refactor only when useful" rule: include refactored code only when there is a concrete fix, a risky pattern should be replaced, or code will clarify the recommendation. If no useful code change is needed, write "No refactored code needed" in that section.
+6. Apply the "fixed code when possible" rule: include a focused fixed-code suggestion when there is a concrete fix, a risky pattern should be replaced, or code will clarify the recommendation. If no useful code change is possible, say why briefly.
 7. When refactoring, keep the original architecture and style unless accessibility requires a structural change.
 8. If runtime validation is possible and appropriate, suggest or run relevant checks: browser accessibility tree inspection, screen reader smoke test, keyboard-only traversal, text scaling, color contrast calculation, snapshot at large font sizes, or native accessibility inspector.
 

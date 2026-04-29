@@ -15,7 +15,7 @@ Use $accessibility-reviewer to review src/components/LoginForm.tsx. Focus on scr
 ## Changed Files Before a PR
 
 ```text
-Use $accessibility-reviewer to review the changed UI files in this project. Prioritize blockers for blind users, keyboard/focus issues, missing labels, text scaling problems, and provide refactored code where appropriate.
+Use $accessibility-reviewer to review the changed UI files in this project. Prioritize blockers for blind users, keyboard/focus issues, missing labels, text scaling problems, and provide fixed code where possible.
 ```
 
 ## React
@@ -45,7 +45,7 @@ Use $accessibility-reviewer to review SettingsViewController.swift. Focus on acc
 ## Flutter
 
 ```text
-Use $accessibility-reviewer to review lib/screens/settings_screen.dart and provide refactored code only where it improves accessibility. Check TalkBack, Semantics, Tooltip, text scaling, and tap target size.
+Use $accessibility-reviewer to review lib/screens/settings_screen.dart and provide fixed code only where it improves accessibility. Check TalkBack, Semantics, Tooltip, text scaling, and tap target size.
 ```
 
 ## Claude/Cursor-Style Agents
